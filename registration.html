@@ -1,0 +1,72 @@
+<?php
+$user = 'root';
+$pass = '';
+$db = 'tester';
+$con = mysql_connect('localhost','root','') or die('Unable to connect');
+$db = mysql_select_db('tester',$con) or die('unable to connect');
+$ip = $_SERVER['REMOTE_ADDR'];
+$mac = shell_exec('arp -a $ip');
+$findme = "172.16";
+$pos = strpos($mac,$findme);
+$macp = substr($mac,($pos+16),18);
+
+
+if(isset($_POST['submit'])) {
+$name = $_POST['name'];
+$email = $_POST['email'];
+$contact = $_POST['contact'];
+$password = $_POST['password'];
+$roll = $_POST['roll'];
+$query = "INSERT INTO tester1(name,email,contact,password,roll,mac_addr) VALUES('$name','$email','$contact','$password','$roll','$macp')";
+$result=mysql_query($query);
+if($result)
+{
+    echo 'Successfully updated into database';
+}
+}
+mysql_close($con);
+
+
+?>
+
+
+  <html>
+  <head>
+  <title>Registration Page to Login </title>
+   <meta name="robots" content="noindex, nofollow" />
+   
+    <link href='redirect_form.css' rel='stylesheet' type='text/css'>
+   
+</head>
+<body>
+
+
+ <div class="main">
+    <div class="first">
+        <h2>Signup Form </h2><hr/></br></br>
+   
+        
+<form method="post" id="#form">
+        <label>Name :</label> <br />
+        <input type='text' name="name" id="name" placeholder='Your Name'/><br>
+       
+        <label>Email : </label> <br />
+        <input type='text' name="email" id="email" placeholder='Valid Email Address'/><br>
+       
+        <label>Contact : </label> <br />
+        <input type='text' name="contact" id="contact" placeholder='Contact'/><br>
+        <label>Password: </label> <br />
+        <input type='password' name="password" id="address" value="" placeholder='Password'/><br>
+    <label>Roll No: </label> <br />
+        <input type='text' name="roll" id="address1" value="" placeholder='rollno'/> <br />
+    
+       
+        <input type='submit' id='btn' name="submit" Value='Submit' /><br />
+   
+           
+   
+    </form>
+    </div>
+    </div>
+</body>
+</html>
